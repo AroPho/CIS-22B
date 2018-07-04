@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1530677099 source:c:\users\aaron\desktop\cis22b\labs\lab1.cpp
+	<iostream>
+	<vector>
+	<string>
+	<fstream>
+
