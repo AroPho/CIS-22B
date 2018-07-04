@@ -5,7 +5,7 @@
 using namespace std;
 
 void getSize(int&);
-void getSpace(int&, array*);
+void getSpace(int&, string*);
 void inputData();
 void printData();
 void destory();
@@ -13,10 +13,10 @@ void destory();
 int main()
 {
     int num;
-    string
+    string fuck;
     getSize(num);
     cout << num;
-    getSpace();
+    getSpace(num, &fuck);
 
 
 
@@ -28,4 +28,7 @@ void getSize(int &num)
     cin >> num;
 }
 
-void getSpace(int &num)
+void getSpace(int num, string *fuck)
+{
+
+}
