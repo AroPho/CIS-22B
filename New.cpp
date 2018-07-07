@@ -27,6 +27,7 @@ void getSize(int &num)
 {
     cout << "How many strings do you want?" << "\n";
     cin >> num;
+    cin.ignore();
 }
 
 void getSpace(int num, string *&array1)
@@ -43,7 +44,6 @@ void inputData(int num, string *array1)
         cout << "Please enter String " << x + 1 << "\n";
         getline(cin,st1);
         array1[x] = st1;
-        //cout << st1[x] << "\n";
     }
 }
 
@@ -55,5 +55,3 @@ void printData(int num, string *array1)
    }
 
 }
-
-
