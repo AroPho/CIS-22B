@@ -81,7 +81,7 @@ void printData(int num, string *array1)
 {
    for( int x = 0; x < num; x++ )
    {
-       cout << "String " << x+1 << ":";
+       cout << "String " << x+1 << ": ";
        cout << array1[x] << "\n";
    }
 
