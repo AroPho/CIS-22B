@@ -32,7 +32,6 @@ int main()
 }
 
 /********************* getSize ********************
-
 Asks users for number of incoming Strings.
 size is then saved as an int through reference parameter in function
 */
@@ -48,7 +47,6 @@ void getSize(int &num)
 gets an array in heap of the size
 requested by the user
 */
-
 
 void getSpace(int num, string *&array1)
 {
