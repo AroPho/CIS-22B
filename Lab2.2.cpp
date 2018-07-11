@@ -4,35 +4,48 @@
 #include <fstream>
 using namespace std;
 
-struct Car
+class Car
 {
-    string reportingMark;
-    int carNumber;
-    string kind;
-    bool loaded;
-    string destination;
+    private:
+        string reportingMark;
+        int carNumber;
+        string kind;
+        bool loaded;
+        string destination;
+    public:
+        void setUpCar(string mark, int num, string type, bool load, string dest)
+        {
+            reportingMark = mark;
+            carNumber = num;
+            kind = type;
+            loaded = load;
+            destination = dest;
+        }
+
+
 };
 
- void input(Car *thecar);
- void output(Car *thecar);
+void input(string &mark, int &num, string &type, bool &load, string &dest);
+void output(string &mark, int &num, string &type, bool &load, string &dest);
 
 int main()
-{
-    Car* thecar = new Car();
-    input(thecar);
-    output(thecar);
-    delete[] thecar;
-    thecar = NULL;
-}
-
-void input(Car *thecar)
 {
     string mark;
     int num;
     string type;
     bool load;
-    string dest = "NONE";
+    string dest;
 
+    input(mark, num, type, load, dest);
+    output(mark, num, type, load, dest);
+
+    Car* thecar = new Car();
+    thecar -> setUpCar(mark, num, type, load, dest);
+
+}
+
+void input(string &mark, int &num, string &type, bool &load, string &dest)
+{
     cout << "Please enter the reporting mark (maximum of 5 characters): ";
     cin >> mark;
     while (mark.length() > 5 || mark.length() == 0)
@@ -71,23 +84,12 @@ void input(Car *thecar)
     {
         load = false;
     }
-
-
-    thecar -> reportingMark = mark;
-    thecar -> carNumber = num;
-    thecar -> kind = type;
-    thecar -> loaded = load;
-    thecar -> destination = dest;
-
-
 }
-
-void output(Car *thecar)
+void output(string &mark, int &num, string &type, bool &load, string &dest)
 {
-    cout << "\n" << "*****Car Data*****" << "\n6\n";
-    cout << "Car Mark: " << thecar -> reportingMark << "\n";
-    cout << "Car Number: " << thecar -> carNumber << "\n" ;
-    cout << "Car Type: " << thecar -> kind << "\n";
-    cout << "Car Load: " << boolalpha << thecar -> loaded << "\n";
-    cout << "Car Destination: " << thecar -> destination << "\n";
+    cout << mark << "\n";
+    cout << num << "\n";
+    cout << type << "\n";
+    cout << boolalpha << load << "\n";
+    cout << dest << "\n";
 }
