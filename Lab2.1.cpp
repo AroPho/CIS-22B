@@ -84,7 +84,7 @@ void input(Car *thecar)
 
 void output(Car *thecar)
 {
-    cout << "\n" << "*****Car Data*****" << "\n6\n";
+    cout << "\n" << "*****Car Data*****" << "\n\n";
     cout << "Car Mark: " << thecar -> reportingMark << "\n";
     cout << "Car Number: " << thecar -> carNumber << "\n" ;
     cout << "Car Type: " << thecar -> kind << "\n";

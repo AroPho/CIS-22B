@@ -22,11 +22,16 @@ class Car
             destination = dest;
         }
 
+        ~Car()
+        {
+
+        };
+
 
 };
 
 void input(string &mark, int &num, string &type, bool &load, string &dest);
-void output(string &mark, int &num, string &type, bool &load, string &dest);
+void output(string mark, int num, string type, bool load, string dest);
 
 int main()
 {
@@ -41,6 +46,9 @@ int main()
 
     Car* thecar = new Car();
     thecar -> setUpCar(mark, num, type, load, dest);
+    delete[] thecar;
+    thecar = NULL;
+    return 0;
 
 }
 
@@ -85,11 +93,12 @@ void input(string &mark, int &num, string &type, bool &load, string &dest)
         load = false;
     }
 }
-void output(string &mark, int &num, string &type, bool &load, string &dest)
+void output(string mark, int num, string type, bool load, string dest)
 {
-    cout << mark << "\n";
-    cout << num << "\n";
-    cout << type << "\n";
-    cout << boolalpha << load << "\n";
-    cout << dest << "\n";
+    cout << "\n" << "*****Car Data*****" << "\n\n";
+    cout << "Car Mark: " << mark << "\n";
+    cout << "Car Number: " << num << "\n";
+    cout << "Car Type: " << type << "\n";
+    cout << "Car Load: " << boolalpha << load << "\n";
+    cout << "Car Destination: " << dest << "\n";
 }
