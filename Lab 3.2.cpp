@@ -1,11 +1,11 @@
 /*
 Aaron Nguyen
 Summer 2018
-Lab 2
-Problem 2.2
+Lab 3
+Problem 3.2
 Description of Problem:
-Asks for number for data from user to be stored as an object of a class
-and to output object */
+Asks for inputs from user to be stored as an object of a class
+as well as create multiple constructors for Car class and output data*/
 
 #include <iostream>
 #include <vector>
@@ -26,26 +26,40 @@ class Car
     /**Public member functions**/
     public:
 
-        /**Car class prototype**/
-        Car(string mark, int num, string type, bool load, string dest)
+
+        /**Car class constructors**/
+
+        Car()
         {
-            reportingMark = mark;
-            carNumber = num;
-            kind = type;
-            loaded = load;
-            destination = dest;
+            reportingMark = "";
+            carNumber = 0;
+            kind = "other";
+            loaded = 0;
+            destination = "NONE";
         }
 
-        /**Creates car object and sets variable from local variable in functions**/
-        Car* setUpCar(string mark, int num, string type, bool load, string dest)
+        Car(const Car &carobj)
         {
-            Car *thecar = new Car(mark, num, type, load, dest);
-            return thecar;
+            reportingMark = carobj.reportingMark;
+            carNumber = carobj.carNumber;
+            kind = carobj.kind;
+            loaded = carobj.loaded;
+            destination = carobj.destination;
         }
+
+        Car(string &mark, int &num, string &type, bool &load, string &dest)
+        {
+            setUp(mark, num, type, load, dest);
+        }
+
         /**Destructor**/
         ~Car()
         {
         };
+
+        /**Sets variables for a car object**/
+        void setUp(string &mark, int &num, string &type, bool &load, string &dest);
+
         /**Accessors**/
         string getreportingMark()const
         {
@@ -67,36 +81,70 @@ class Car
         {
             return destination;
         }
+        /**Mutator**/
+
+        void output();
 
 
 };
 
-/**Function Prototypes**/
+/**Input Function Prototype**/
 void input(string &mark, int &num, string &type, bool &load, string &dest);
-void output(string mark, int num, string type, bool load, string dest);
 
 int main()
 {
-    /**Local Variables**/
     string mark;
     int num;
     string type;
     bool load;
     string dest;
 
+    /**Take inputs from User**/
     input(mark, num, type, load, dest);
-    output(mark, num, type, load, dest);
-    /**Pointer for Car Class**/
-    Car *testcar;
-    *testcar -> setUpCar(mark, num, type, load, dest);
-    delete[] testcar;
-    testcar = NULL;
+
+    /**Object creation**/
+    Car car1(mark, num, type, load, dest);
+    Car car2(car1);
+    Car car3;
+
+
+    /**Output object Data**/
+    cout << "\n" << "Car 1 " << "\n";
+    car1.output();
+    cout << "\n" << "Car 2 " << "\n";
+    car2.output();
+    cout << "\n" << "Car 3 " << "\n";
+    car3.output();
     return 0;
 
 }
+
+/**Outputs data inputed by user**/
+void Car :: output()
+{
+    cout << "\n" << "*****Car Data*****" << "\n\n";
+    cout << "Car Mark: " << reportingMark << "\n";
+    cout << "Car Number: " << carNumber << "\n";
+    cout << "Car Type: " << kind << "\n";
+    cout << "Car Load: " << boolalpha << loaded << "\n";
+    cout << "Car Destination: " << destination << "\n";
+}
+
+/**Sets variables for a car object**/
+void Car :: setUp(string &mark, int &num, string &type, bool &load, string &dest)
+{
+
+    reportingMark = mark;
+    carNumber = num;
+    kind = type;
+    loaded = load;
+    destination = dest;
+}
+
 /**Input Function**/
 void input(string &mark, int &num, string &type, bool &load, string &dest)
 {
+
     cout << "Please enter the reporting mark (maximum of 5 characters): ";
     cin >> mark;
     /*Checks for proper input*/
@@ -138,15 +186,7 @@ void input(string &mark, int &num, string &type, bool &load, string &dest)
     {
         load = false;
     }
+
 }
 
-/**Outputs data inputed by user**/
-void output(string mark, int num, string type, bool load, string dest)
-{
-    cout << "\n" << "*****Car Data*****" << "\n\n";
-    cout << "Car Mark: " << mark << "\n";
-    cout << "Car Number: " << num << "\n";
-    cout << "Car Type: " << type << "\n";
-    cout << "Car Load: " << boolalpha << load << "\n";
-    cout << "Car Destination: " << dest << "\n";
-}
+

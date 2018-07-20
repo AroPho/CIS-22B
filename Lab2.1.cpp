@@ -1,3 +1,11 @@
+/*
+Aaron Nguyen
+Summer 2018
+Lab 1
+Problem 2.1
+Description of Problem:
+Asks for number for data from user to be stored in a structure
+and to be outputted */
 #include <iostream>
 #include <vector>
 #include <string>
@@ -13,11 +21,13 @@ struct Car
     string destination;
 };
 
+/**Function Prototypes**/
  void input(Car *thecar);
  void output(Car *thecar);
 
 int main()
 {
+    /**Creates pointer to Car structure**/
     Car* thecar = new Car();
     input(thecar);
     output(thecar);
@@ -25,6 +35,7 @@ int main()
     thecar = NULL;
 }
 
+/**Function that takes inputs from users and stores it in a structure**/
 void input(Car *thecar)
 {
     string mark;
@@ -35,6 +46,7 @@ void input(Car *thecar)
 
     cout << "Please enter the reporting mark (maximum of 5 characters): ";
     cin >> mark;
+    /*Checks for proper input*/
     while (mark.length() > 5 || mark.length() == 0)
     {
         cout << "Invalid input please re-input mark: ";
@@ -47,6 +59,7 @@ void input(Car *thecar)
 
     cout << "Please input the Car Number: ";
     cin >> num;
+    /*Checks for proper input*/
     while (cin.fail())
     {
         cout << "Invalid please enter valid Number: ";
@@ -72,7 +85,7 @@ void input(Car *thecar)
         load = false;
     }
 
-
+    /**Transfers local variables to structure**/
     thecar -> reportingMark = mark;
     thecar -> carNumber = num;
     thecar -> kind = type;
@@ -82,6 +95,7 @@ void input(Car *thecar)
 
 }
 
+/**Outputs stored data in car structure**/
 void output(Car *thecar)
 {
     cout << "\n" << "*****Car Data*****" << "\n\n";

@@ -1,11 +1,11 @@
 /*
 Aaron Nguyen
 Summer 2018
-Lab 2
-Problem 2.2
+Lab 3
+Problem 3.1
 Description of Problem:
-Asks for number for data from user to be stored as an object of a class
-and to output object */
+Asks for inputs from user to be stored as an object of a class
+and then is outputted later */
 
 #include <iostream>
 #include <vector>
@@ -26,22 +26,15 @@ class Car
     /**Public member functions**/
     public:
 
+
         /**Car class prototype**/
-        Car(string mark, int num, string type, bool load, string dest)
+        Car(string &mark, int &num, string &type, bool &load, string &dest)
         {
-            reportingMark = mark;
-            carNumber = num;
-            kind = type;
-            loaded = load;
-            destination = dest;
+            setUp(mark, num, type, load, dest);
         }
 
-        /**Creates car object and sets variable from local variable in functions**/
-        Car* setUpCar(string mark, int num, string type, bool load, string dest)
-        {
-            Car *thecar = new Car(mark, num, type, load, dest);
-            return thecar;
-        }
+        void setUp(string &mark, int &num, string &type, bool &load, string &dest);
+
         /**Destructor**/
         ~Car()
         {
@@ -67,36 +60,61 @@ class Car
         {
             return destination;
         }
+        /**Mutator**/
+
+        void output();
 
 
 };
 
-/**Function Prototypes**/
 void input(string &mark, int &num, string &type, bool &load, string &dest);
-void output(string mark, int num, string type, bool load, string dest);
 
 int main()
 {
-    /**Local Variables**/
     string mark;
     int num;
     string type;
     bool load;
     string dest;
 
+    /**Take inputs from User**/
     input(mark, num, type, load, dest);
-    output(mark, num, type, load, dest);
-    /**Pointer for Car Class**/
-    Car *testcar;
-    *testcar -> setUpCar(mark, num, type, load, dest);
-    delete[] testcar;
-    testcar = NULL;
+
+    /**Object creation**/
+    Car car1(mark, num, type, load, dest);
+
+    /**Output object Data**/
+    car1.output();
     return 0;
 
 }
+
+/**Outputs data inputed by user**/
+void Car :: output()
+{
+    cout << "\n" << "*****Car Data*****" << "\n\n";
+    cout << "Car Mark: " << reportingMark << "\n";
+    cout << "Car Number: " << carNumber << "\n";
+    cout << "Car Type: " << kind << "\n";
+    cout << "Car Load: " << boolalpha << loaded << "\n";
+    cout << "Car Destination: " << destination << "\n";
+}
+
+/**Sets variables for a car object**/
+void Car :: setUp(string &mark, int &num, string &type, bool &load, string &dest)
+{
+
+    reportingMark = mark;
+    carNumber = num;
+    kind = type;
+    loaded = load;
+    destination = dest;
+}
+
 /**Input Function**/
 void input(string &mark, int &num, string &type, bool &load, string &dest)
 {
+
     cout << "Please enter the reporting mark (maximum of 5 characters): ";
     cin >> mark;
     /*Checks for proper input*/
@@ -138,15 +156,6 @@ void input(string &mark, int &num, string &type, bool &load, string &dest)
     {
         load = false;
     }
+
 }
 
-/**Outputs data inputed by user**/
-void output(string mark, int num, string type, bool load, string dest)
-{
-    cout << "\n" << "*****Car Data*****" << "\n\n";
-    cout << "Car Mark: " << mark << "\n";
-    cout << "Car Number: " << num << "\n";
-    cout << "Car Type: " << type << "\n";
-    cout << "Car Load: " << boolalpha << load << "\n";
-    cout << "Car Destination: " << dest << "\n";
-}
