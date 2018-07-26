@@ -109,7 +109,6 @@ void input();
 int main()
 {
     input();
-
     return 0;
 
 }
@@ -128,7 +127,6 @@ void Car :: output()
 /**Sets variables for a car object**/
 void Car :: setUp(string &mark, int &num, string &type, bool &load, string &dest)
 {
-
     reportingMark = mark;
     carNumber = num;
     kind = type;
@@ -140,6 +138,7 @@ void Car :: setUp(string &mark, int &num, string &type, bool &load, string &dest
 void input()
 {
 
+    string obj;
     string mark;
     int num;
     string type;
@@ -147,21 +146,37 @@ void input()
     string dest;
 
     ifstream inputFile ("cardata4.txt");
-
     if(inputFile.is_open())
     {
-        inputFile.close();
+        while(!inputFile.eof())
+        {
+            inputFile >> obj >> mark >> num >> type;
+            inputFile >> boolalpha >> load;
+            getline(inputFile, dest);
+
+
+        }
 
     }
     else
     {
-        cout << "";
+        cout << "File not found";
+        exit(1);
     }
 
 
 
-    /*Checks for proper input*/
-    while (mark.length() > 5 || mark.length() == 0)
+
+
+
+
+    Car temp(mark, num, type, load, dest);
+    temp.output();
+
+}
+
+/*Checks for proper input*/
+    /*while (mark.length() > 5 || mark.length() == 0)
     {
         cin >> mark;
     }
@@ -172,6 +187,7 @@ void input()
 
     cin >> num;
     /*Checks for proper input*/
+    /*
     while (cin.fail())
     {
         cin.clear();
@@ -192,11 +208,5 @@ void input()
     else
     {
         load = false;
-    }
-
-    Car temp(mark, num, type, load, dest);
-    temp.output();
-
-}
-
+    }*/
 
