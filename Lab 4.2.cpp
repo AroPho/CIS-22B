@@ -75,6 +75,21 @@ class Car
         /**Operator that compares variables within objects**/
         friend bool operator == (const Car &car1, const Car &car2);
 
+        Car&  operator = (const Car & carB);
+
+
+
+};
+
+class StringOfCars
+{
+    private:
+        Car *ptr;
+        static const int ARRAY_MAX_SIZE = 10;
+
+
+    public:
+
 
 };
 
@@ -134,17 +149,27 @@ void Car :: setUp(string &mark, int &num, string &type, bool &load, string &dest
     destination = dest;
 }
 
+Car & Car::operator=(const Car & carB)
+        {
+            reportingMark = carB.reportingMark;
+            carNumber     = carB.carNumber;
+            kind          = carB.kind;
+            loaded        = carB.loaded;
+            destination   = carB.destination;
+        }
+
 bool operator == (const Car &car1, const Car &car2)
-    {
-        if( car1.getreportingMark() == car2.getreportingMark() && car1.getcarNumber() == car2.getcarNumber())
         {
-            return true;
+            if( car1.getreportingMark() == car2.getreportingMark() && car1.getcarNumber() == car2.getcarNumber())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
-        else
-        {
-            return false;
-        }
-    }
 
 
 /**Input Function**/
@@ -189,4 +214,3 @@ void input()
     }
 
 }
-
