@@ -86,10 +86,20 @@ class StringOfCars
     private:
         Car *ptr;
         static const int ARRAY_MAX_SIZE = 10;
-
+        int scount;
 
     public:
+        StringOfCars();
 
+        StringOfCars(const StringOfCars &);
+
+        ~StringOfCars();
+
+        void push(const Car &car);
+
+        void pop( Car &car);
+
+        void output();
 
 };
 
@@ -98,6 +108,19 @@ void input();
 
 int main()
 {
+    string mark = "SP";
+    int num = 34567;
+    string type = "box";
+    bool load = true;
+    string dest = "Salt Lake City";
+    cout << "TEST 1" << "\n";
+    Car car1(mark, num, type, load, dest);
+    Car car2(car1);
+    car2.output();
+
+    StringOfCars string1();
+    cout << "TEST 2" << "\n";
+
     input();
     return 0;
 
@@ -150,13 +173,70 @@ void Car :: setUp(string &mark, int &num, string &type, bool &load, string &dest
 }
 
 Car & Car::operator=(const Car & carB)
-        {
-            reportingMark = carB.reportingMark;
-            carNumber     = carB.carNumber;
-            kind          = carB.kind;
-            loaded        = carB.loaded;
-            destination   = carB.destination;
-        }
+    {
+        reportingMark = carB.reportingMark;
+        carNumber     = carB.carNumber;
+        kind          = carB.kind;
+        loaded        = carB.loaded;
+        destination   = carB.destination;
+    }
+
+StringOfCars :: StringOfCars()
+{
+    ptr = new Car[ARRAY_MAX_SIZE];
+    scount = 0;
+}
+
+StringOfCars :: StringOfCars(const StringOfCars &cars)
+{
+    ptr = new Car[ARRAY_MAX_SIZE];
+    for( int c = 0; c < ARRAY_MAX_SIZE; c++)
+    {
+        *(ptr + c) = *(cars.ptr + c);
+        scount = c;
+    }
+}
+
+StringOfCars :: ~StringOfCars()
+{
+    delete[] ptr;
+}
+
+void StringOfCars :: output()
+{
+    if(scount == 0)
+    {
+        cout << "No Cars";
+    }
+    for(int x = 0; x < scount; x++)
+    {
+     ptr[x].output();
+    }
+
+}
+
+void StringOfCars :: push(const Car &car)
+{
+    if(scount >= ARRAY_MAX_SIZE)
+    {
+        cout << "String of Cars is at max capacity" << "\n";
+        return;
+    }
+    ptr[scount] = car;
+    scount++;
+}
+
+void StringOfCars :: pop( Car &car)
+{
+    if(scount < ARRAY_MAX_SIZE)
+    {
+        cout << "No Cars" << "\n";
+        return;
+    }
+    car = ptr[scount];
+    scount--;
+}
+
 
 bool operator == (const Car &car1, const Car &car2)
         {
@@ -201,6 +281,7 @@ void input()
             }
             else
             {
+                inputFile.close();
                 exit(0);
             }
 

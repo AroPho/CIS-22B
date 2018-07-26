@@ -176,6 +176,7 @@ void input()
             }
             else
             {
+                inputFile.close();
                 exit(0);
             }
 
