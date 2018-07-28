@@ -86,7 +86,7 @@ class StringOfCars
     private:
         Car *ptr;
         static const int ARRAY_MAX_SIZE = 10;
-        int scount;
+        int scount = 0;
 
     public:
         StringOfCars();
@@ -95,7 +95,7 @@ class StringOfCars
 
         ~StringOfCars();
 
-        void push(const Car &car);
+        void push( Car &car);
 
         void pop( Car &car);
 
@@ -104,7 +104,7 @@ class StringOfCars
 };
 
 /**Input Function Prototype**/
-void input();
+void input(StringOfCars &strings);
 
 int main()
 {
@@ -118,10 +118,18 @@ int main()
     Car car2(car1);
     car2.output();
 
-    StringOfCars string1();
-    cout << "TEST 2" << "\n";
+    StringOfCars string1;
+    cout << "\n" <<"TEST 2" << "\n";
+    input(string1);
+    string1.output();
 
-    input();
+    cout << "TEST 3" << "\n";
+
+    Car car3;
+    string1.pop(car3);
+    string1.output();
+    car3.output();
+
     return 0;
 
 }
@@ -215,7 +223,7 @@ void StringOfCars :: output()
 
 }
 
-void StringOfCars :: push(const Car &car)
+void StringOfCars :: push( Car &car)
 {
     if(scount >= ARRAY_MAX_SIZE)
     {
@@ -253,7 +261,7 @@ bool operator == (const Car &car1, const Car &car2)
 
 
 /**Input Function**/
-void input()
+void input(StringOfCars &strings)
 {
     int check;
     string obj;
@@ -276,13 +284,13 @@ void input()
 
             if(check != temp.getcarNumber())
             {
-                temp.output();
                 check = temp.getcarNumber();
+                strings.push(temp);
             }
             else
             {
                 inputFile.close();
-                exit(0);
+                return;
             }
 
         }
