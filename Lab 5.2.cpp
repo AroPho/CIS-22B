@@ -52,7 +52,7 @@ class Car
         void setUp(string &mark, int &num, Kind &type, bool &load, string &dest);
 
         /**Destructor**/
-        ~Car()
+        virtual ~Car()
         {
         };
         /**Accessors**/
@@ -80,7 +80,7 @@ class Car
 
         void output();
 
-        void setKind(string &k);
+        virtual void setKind(string &k);
 
         /**Operator that compares variables within objects**/
         friend bool operator == (const Car &car1, const Car &car2);
@@ -164,7 +164,7 @@ class StringOfCars
 {
     /**Private data for StringOfCars**/
     private:
-        Car *ptr;
+        Car **ptr;
         static const int ARRAY_MAX_SIZE = 10;
         int scount = 0;
 
@@ -192,9 +192,9 @@ class StringOfCars
 
 /**Function Prototypes**/
 void input(StringOfCars &strings);
-void buildCar(string &mark,  int &num,  Kind &type,  bool &load,  string &dest);
-void buildFreightCar(string &mark,  int &num,  Kind &type,  bool &load,  string &dest);
-void buildPassengerCar(string &mark,  int &num,  Kind &type,  bool &load,  string &dest);
+void buildCar(Car *&ptr, string &mark,  int &num,  Kind &type,  bool &load,  string &dest, StringOfCars &string1);
+void buildFreightCar(FreightCar *&ptr, string &mark,  int &num,  Kind &type,  bool &load,  string &dest, StringOfCars &string1);
+void buildPassengerCar(PassengerCar *&ptr, string &mark,  int &num,  Kind &type,  bool &load,  string &dest, StringOfCars &string1);
 
 int main()
 {
@@ -283,13 +283,12 @@ Car &Car :: operator = (const Car &carB)
 
 StringOfCars :: StringOfCars()
 {
-    ptr = new Car[ARRAY_MAX_SIZE];
+    ptr[0] = new Car();
     scount = 0;
 }
 
 StringOfCars :: StringOfCars(const StringOfCars &cars)
 {
-    ptr = new Car[ARRAY_MAX_SIZE];
     for( int c = 0; c < ARRAY_MAX_SIZE; c++)
     {
         *(ptr + c) = *(cars.ptr + c);
@@ -314,7 +313,7 @@ void StringOfCars :: output()
     }
     for(int x = 0; x < scount; x++)
     {
-     ptr[x].output();
+     ptr[x] -> output();
     }
 
 }
@@ -328,7 +327,7 @@ void StringOfCars :: push(Car &car)
         cout << "String of Cars is at max capacity" << "\n";
         return;
     }
-    ptr[scount] = car;
+    *ptr[scount] = car;
     scount++;
 }
 
@@ -341,7 +340,7 @@ void StringOfCars :: pop(Car &car)
         cout << "No Cars" << "\n";
         return;
     }
-    car = ptr[scount - 1];
+    car = *ptr[scount - 1];
     scount--;
 }
 
@@ -369,7 +368,6 @@ void input(StringOfCars &string1)
     string carnum;
     string mark;
     int num;
-    int counter = 0;
     string k;
     Kind type;
     bool load;
@@ -399,20 +397,22 @@ void input(StringOfCars &string1)
 
             if(check != num)
             {
-                counter++;
-                cout << "\n" << "This car is Car: " << counter << " \n";
+                cout << "\n" << carnum << " \n";
                 check = num;
                 if(obj == "Car")
                 {
-                    buildCar(mark, num, type, load, dest);
+                    Car *carobj;
+                    buildCar(carobj, mark, num, type, load, dest, string1);
                 }
                 else if(obj == "FreightCar")
                 {
-                    buildFreightCar(mark, num, type, load, dest);
+                    FreightCar *fcarobj;
+                    buildFreightCar(fcarobj, mark, num, type, load, dest, string1);
                 }
                 else if(obj == "PassengerCar")
                 {
-                    buildPassengerCar(mark, num, type, load, dest);
+                    PassengerCar *Pcarobj;
+                    buildPassengerCar(Pcarobj, mark, num, type, load, dest, string1);
                 }
             }
             else
@@ -432,25 +432,28 @@ void input(StringOfCars &string1)
 
 }
 
-void buildCar(/*Car *&ptr,*/  string &mark,  int &num,  Kind &type,  bool &load,  string &dest)
+void buildCar(Car *&ptr,  string &mark,  int &num,  Kind &type,  bool &load,  string &dest, StringOfCars &string1)
 {
-    Car temp(mark, num, type, load, dest);
-    temp.output();
+    ptr = new Car;
+    ptr -> setUp(mark, num, type, load, dest);
+    string1.push(*ptr);
     return;
 }
 
-void buildFreightCar(/*Car *&ptr,*/  string &mark,  int &num,  Kind &type,  bool &load,  string &dest)
+void buildFreightCar(FreightCar *&ptr,  string &mark,  int &num,  Kind &type,  bool &load,  string &dest, StringOfCars &string1)
 {
-    FreightCar temp(mark, num, type, load, dest);
-    temp.output();
+    ptr = new FreightCar;
+    ptr -> setUp(mark, num, type, load, dest);
+    string1.push(*ptr);
     return;
 
 }
 
-void buildPassengerCar(/*Car *&ptr,*/  string &mark,  int &num,  Kind &type,  bool &load,  string &dest)
+void buildPassengerCar(PassengerCar *&ptr,  string &mark,  int &num,  Kind &type,  bool &load,  string &dest, StringOfCars &string1)
 {
-    PassengerCar temp(mark, num, type, load, dest);
-    temp.output();
+    ptr = new PassengerCar;
+    ptr -> setUp(mark, num, type, load, dest);
+    string1.push(*ptr);
     return;
 
 }
