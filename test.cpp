@@ -8,12 +8,17 @@ using namespace std;
 
 enum Kind{business, maintenance, other, box, tank, flat, otherFreight,
 chair, sleeper, otherPassenger };
+const string KIND_ARRAY[] = {"business", "maintenance", "other", "box", "tank",
+"flat", "otherFreight", "chair", "sleeper", "otherPassenger"};
 
-Kind kind;
+string knd;
+
+Kind type;
 
 int main()
 {
-    cin >> kind;
+    type = business;
+    knd = KIND_ARRAY[type];
 
-    cout << kind;
+    cout << knd;
 }

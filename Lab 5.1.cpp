@@ -383,12 +383,16 @@ void input(StringOfCars &string1)
             inputFile >> boolalpha >> load;
             getline(inputFile, dest);
 
-            for (int x = business; x < 10; ++x)
+        for (int x = business; x < 10; ++x)
             {
                 if (KIND_ARRAY[x] == k)
                 {
                     type = static_cast<Kind>(x);
                     break;
+                }
+                else
+                {
+                    type = other;
                 }
             }
 
