@@ -13,16 +13,25 @@ Then runs a series of tests to test the code.*/
 #include <fstream>
 using namespace std;
 
+
+
+enum Kind{business, maintenance, other, box, tank, flat, otherFreight,
+chair, sleeper, otherPassenger };
+const string KIND_ARRAY[] = {"business", "maintenance", "other", "box", "tank",
+"flat", "otherFreight", "chair", "sleeper", "otherPassenger"};
+
+
 /** Declares a class **/
 class Car
 {
     /**Private data for car**/
-    public:
+    protected:
         string reportingMark;
         int carNumber;
-        string kind;
+        Kind kind;
         bool loaded;
         string destination;
+        string knd;
 
     /**Public member functions**/
     public:
@@ -33,14 +42,14 @@ class Car
         Car();
 
 
-        Car(string &mark, int &num, string &type, bool &load, string &dest);
+        Car(string &mark, int &num, Kind &type, bool &load, string &dest);
 
 
         Car(const Car &carobj);
 
 
         /**Sets variables for a car object**/
-        void setUp(string &mark, int &num, string &type, bool &load, string &dest);
+        void setUp(string &mark, int &num, Kind &type, bool &load, string &dest);
 
         /**Destructor**/
         ~Car()
@@ -55,7 +64,7 @@ class Car
         {
             return carNumber;
         }
-        string getkind() const
+        Kind getkind() const
         {
             return kind;
         }
@@ -71,11 +80,80 @@ class Car
 
         void output();
 
+        void setKind(string &k);
+
         /**Operator that compares variables within objects**/
         friend bool operator == (const Car &car1, const Car &car2);
 
         /**Operator Overload**/
         Car &  operator = (const Car & carB);
+
+
+
+
+};
+
+class FreightCar : public Car
+{
+    public:
+        FreightCar() : Car()
+        {   }
+
+        FreightCar(const Car &carobj) : Car(carobj)
+        {   }
+        FreightCar( string &mark,  int &num, Kind &type,  bool &load,
+                    string &dest) : Car(mark, num, type, load, dest)
+                   {
+                       knd = KIND_ARRAY[type];
+                       setKind(knd);
+                   }
+        void setKind(string &k)
+            {
+                for (int x = box; x < otherFreight; ++x)
+                    {
+                        if (KIND_ARRAY[x] == k)
+                        {
+                            kind = static_cast<Kind>(x);
+                            return;
+                        }
+                        else
+                        {
+                            kind = otherFreight;
+                        }
+                    }
+            }
+
+
+};
+
+class PassengerCar : public Car
+{
+    public:
+        PassengerCar() : Car()
+            {   }
+        PassengerCar(const Car &carobj) : Car(carobj)
+            {   }
+        PassengerCar( string &mark,  int &num, Kind &type,  bool &load,
+                    string &dest) : Car(mark, num, type, load, dest)
+                {
+                    knd = KIND_ARRAY[type];
+                    setKind(knd);
+                }
+        void setKind(string &k)
+            {
+                for (int x = chair; x < otherPassenger; ++x)
+                    {
+                        if (KIND_ARRAY[x] == k)
+                        {
+                            kind = static_cast<Kind>(x);
+                            return;
+                        }
+                        else if(KIND_ARRAY[x] != k)
+                        {
+                            kind = otherPassenger;
+                        }
+                    }
+            }
 
 
 
@@ -112,33 +190,16 @@ class StringOfCars
 
 };
 
-/**Input Function Prototype**/
+/**Function Prototypes**/
 void input(StringOfCars &strings);
+void buildCar(string &mark,  int &num,  Kind &type,  bool &load,  string &dest);
+void buildFreightCar(string &mark,  int &num,  Kind &type,  bool &load,  string &dest);
+void buildPassengerCar(string &mark,  int &num,  Kind &type,  bool &load,  string &dest);
 
 int main()
 {
-    string mark = "SP";
-    int num = 34567;
-    string type = "box";
-    bool load = true;
-    string dest = "Salt Lake City";
-    cout << "TEST 1" << "\n";
-    Car car1(mark, num, type, load, dest);
-    Car car2(car1);
-    car2.output();
-
     StringOfCars string1;
-    cout << "\n" <<"TEST 2" << "\n";
     input(string1);
-    string1.output();
-
-    cout << "\n" << "TEST 3" << "\n";
-
-    Car car3;
-    string1.pop(car3);
-    car3.output();
-    string1.output();
-
     return 0;
 
 }
@@ -149,12 +210,12 @@ Car :: Car()
     {
         reportingMark = "";
         carNumber = 0;
-        kind = "other";
+        kind = other;
         loaded = 0;
         destination = "NONE";
     }
 
-Car:: Car(string &mark, int &num, string &type, bool &load, string &dest)
+Car:: Car(string &mark, int &num, Kind &type, bool &load, string &dest)
     {
         setUp(mark, num, type, load, dest);
     }
@@ -174,13 +235,13 @@ void Car :: output()
     cout << "\n" << "*****Car Data*****" << "\n\n";
     cout << "Car Mark: " << reportingMark << "\n";
     cout << "Car Number: " << carNumber << "\n";
-    cout << "Car Type: " << kind << "\n";
+    cout << "Car Type: " << KIND_ARRAY[kind] << "\n";
     cout << "Car Load: " << boolalpha << loaded << "\n";
     cout << "Car Destination: " << destination << "\n";
 }
 
 /**Sets variables for a car object**/
-void Car :: setUp(string &mark, int &num, string &type, bool &load, string &dest)
+void Car :: setUp(string &mark, int &num, Kind &type, bool &load, string &dest)
 {
     reportingMark = mark;
     carNumber = num;
@@ -189,9 +250,25 @@ void Car :: setUp(string &mark, int &num, string &type, bool &load, string &dest
     destination = dest;
 }
 
+void Car :: setKind(string &k)
+{
+    for (int x = business; x < other; ++x)
+            {
+                if (KIND_ARRAY[x] == k)
+                {
+                    kind = static_cast<Kind>(x);
+                    return;
+                }
+                else
+                {
+                    kind = other;
+                }
+            }
+}
+
 /**Operator Overload**/
 
-Car &Car :: operator=(const Car &carB)
+Car &Car :: operator = (const Car &carB)
     {
         reportingMark = carB.reportingMark;
         carNumber     = carB.carNumber;
@@ -235,7 +312,7 @@ void StringOfCars :: output()
     {
         cout << "No Cars";
     }
-    for(int x = 0; x <= scount; x++)
+    for(int x = 0; x < scount; x++)
     {
      ptr[x].output();
     }
@@ -289,27 +366,48 @@ void input(StringOfCars &string1)
 {
     int check;
     string obj;
+    string carnum;
     string mark;
     int num;
-    string type;
+    string k;
+    Kind type;
     bool load;
     string dest;
 
-    ifstream inputFile ("cardata4.txt");
+    ifstream inputFile ("cardata5.txt");
     if(inputFile.is_open())
     {
         while(!inputFile.eof())
         {
-            inputFile >> obj >> mark >> num >> type;
+            inputFile >> obj >> carnum >> mark >> num >> k;
             inputFile >> boolalpha >> load;
             getline(inputFile, dest);
 
-            Car temp(mark, num, type, load, dest);
-
-            if(check != temp.getcarNumber())
+            for (int x = business; x < 10; ++x)
             {
-                check = temp.getcarNumber();
-                string1.push(temp);
+                if (KIND_ARRAY[x] == k)
+                {
+                    type = static_cast<Kind>(x);
+                    break;
+                }
+            }
+
+            if(check != num)
+            {
+                cout << "\n" << carnum << " \n";
+                check = num;
+                if(obj == "Car")
+                {
+                    buildCar(mark, num, type, load, dest);
+                }
+                else if(obj == "FreightCar")
+                {
+                    buildFreightCar(mark, num, type, load, dest);
+                }
+                else if(obj == "PassengerCar")
+                {
+                    buildPassengerCar(mark, num, type, load, dest);
+                }
             }
             else
             {
@@ -327,3 +425,27 @@ void input(StringOfCars &string1)
     }
 
 }
+
+void buildCar(/*Car *&ptr,*/  string &mark,  int &num,  Kind &type,  bool &load,  string &dest)
+{
+    Car temp(mark, num, type, load, dest);
+    temp.output();
+    return;
+}
+
+void buildFreightCar(/*Car *&ptr,*/  string &mark,  int &num,  Kind &type,  bool &load,  string &dest)
+{
+    FreightCar temp(mark, num, type, load, dest);
+    temp.output();
+    return;
+
+}
+
+void buildPassengerCar(/*Car *&ptr,*/  string &mark,  int &num,  Kind &type,  bool &load,  string &dest)
+{
+    PassengerCar temp(mark, num, type, load, dest);
+    temp.output();
+    return;
+
+}
+
