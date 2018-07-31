@@ -1,12 +1,11 @@
 /*
 Aaron Nguyen
 Summer 2018
-Lab 3
-Problem 3.1
+Lab 4
+Problem 4.1
 Description of Problem:
-Asks for inputs from user to be stored as an object of a class
-as well as create multiple constructors for Car class. Then compare data
-in each object and outputs data and results of comparison.*/
+Takes input from text file and outputs the data found in txt file.
+Then runs a series of tests to test the code.*/
 
 #include <iostream>
 #include <vector>
@@ -83,6 +82,8 @@ void input();
 
 int main()
 {
+
+/**Takes input from file**/
     input();
     return 0;
 
@@ -133,6 +134,8 @@ void Car :: setUp(string &mark, int &num, string &type, bool &load, string &dest
     loaded = load;
     destination = dest;
 }
+
+/**Friend operator overload function for Car class**/
 
 bool operator == (const Car &car1, const Car &car2)
     {

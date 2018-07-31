@@ -1,12 +1,11 @@
 /*
 Aaron Nguyen
 Summer 2018
-Lab 3
-Problem 3.1
+Lab 4
+Problem 4.2
 Description of Problem:
-Asks for inputs from user to be stored as an object of a class
-as well as create multiple constructors for Car class. Then compare data
-in each object and outputs data and results of comparison.*/
+Takes input from text file and stores the data in an array of objects.
+Then runs a series of tests to test the code.*/
 
 #include <iostream>
 #include <vector>
@@ -75,30 +74,40 @@ class Car
         /**Operator that compares variables within objects**/
         friend bool operator == (const Car &car1, const Car &car2);
 
-        Car&  operator = (const Car & carB);
+        /**Operator Overload**/
+        Car &  operator = (const Car & carB);
 
 
 
 };
 
+/** Declares a class **/
 class StringOfCars
 {
+    /**Private data for StringOfCars**/
     private:
         Car *ptr;
         static const int ARRAY_MAX_SIZE = 10;
         int scount = 0;
 
+    /**Public member functions**/
     public:
+
+        /**Constructors**/
         StringOfCars();
 
         StringOfCars(const StringOfCars &);
 
+        /**Destructor**/
         ~StringOfCars();
 
+        /**Adds car objects to array of car objects**/
         void push( Car &car);
 
+        /**deletes car objects in array of car objects**/
         void pop( Car &car);
 
+        /**Outputs StringOfCars**/
         void output();
 
 };
@@ -123,12 +132,12 @@ int main()
     input(string1);
     string1.output();
 
-    cout << "TEST 3" << "\n";
+    cout << "\n" << "TEST 3" << "\n";
 
     Car car3;
     string1.pop(car3);
-    string1.output();
     car3.output();
+    string1.output();
 
     return 0;
 
@@ -180,14 +189,20 @@ void Car :: setUp(string &mark, int &num, string &type, bool &load, string &dest
     destination = dest;
 }
 
-Car & Car::operator=(const Car & carB)
+/**Operator Overload**/
+
+Car &Car :: operator=(const Car &carB)
     {
         reportingMark = carB.reportingMark;
         carNumber     = carB.carNumber;
         kind          = carB.kind;
         loaded        = carB.loaded;
         destination   = carB.destination;
+
+        return * this;
     }
+
+/**Constructors**/
 
 StringOfCars :: StringOfCars()
 {
@@ -205,10 +220,14 @@ StringOfCars :: StringOfCars(const StringOfCars &cars)
     }
 }
 
+/**Destructor**/
+
 StringOfCars :: ~StringOfCars()
 {
     delete[] ptr;
 }
+
+/**Outputs StringOfCars**/
 
 void StringOfCars :: output()
 {
@@ -216,14 +235,16 @@ void StringOfCars :: output()
     {
         cout << "No Cars";
     }
-    for(int x = 0; x < scount; x++)
+    for(int x = 0; x <= scount; x++)
     {
      ptr[x].output();
     }
 
 }
 
-void StringOfCars :: push( Car &car)
+/**Adds car objects to array of car objects**/
+
+void StringOfCars :: push(Car &car)
 {
     if(scount >= ARRAY_MAX_SIZE)
     {
@@ -234,17 +255,20 @@ void StringOfCars :: push( Car &car)
     scount++;
 }
 
-void StringOfCars :: pop( Car &car)
+/**deletes car objects in array of car objects**/
+
+void StringOfCars :: pop(Car &car)
 {
-    if(scount < ARRAY_MAX_SIZE)
+    if(scount < 0)
     {
         cout << "No Cars" << "\n";
         return;
     }
-    car = ptr[scount];
+    car = ptr[scount - 1];
     scount--;
 }
 
+/**Friend operator overload function for Car class**/
 
 bool operator == (const Car &car1, const Car &car2)
         {
@@ -261,7 +285,7 @@ bool operator == (const Car &car1, const Car &car2)
 
 
 /**Input Function**/
-void input(StringOfCars &strings)
+void input(StringOfCars &string1)
 {
     int check;
     string obj;
@@ -285,7 +309,7 @@ void input(StringOfCars &strings)
             if(check != temp.getcarNumber())
             {
                 check = temp.getcarNumber();
-                strings.push(temp);
+                string1.push(temp);
             }
             else
             {
