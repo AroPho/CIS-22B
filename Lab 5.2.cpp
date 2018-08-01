@@ -283,7 +283,7 @@ Car &Car :: operator = (const Car &carB)
 
 StringOfCars :: StringOfCars()
 {
-    ptr[0] = new Car();
+    *ptr = new Car[ARRAY_MAX_SIZE];
     scount = 0;
 }
 
@@ -300,7 +300,7 @@ StringOfCars :: StringOfCars(const StringOfCars &cars)
 
 StringOfCars :: ~StringOfCars()
 {
-    delete[] ptr;
+    delete[] *ptr;
 }
 
 /**Outputs StringOfCars**/
@@ -313,7 +313,7 @@ void StringOfCars :: output()
     }
     for(int x = 0; x < scount; x++)
     {
-     ptr[x] -> output();
+     (ptr)[x] -> output();
     }
 
 }
@@ -327,7 +327,7 @@ void StringOfCars :: push(Car &car)
         cout << "String of Cars is at max capacity" << "\n";
         return;
     }
-    *ptr[scount] = car;
+    (ptr)[scount] = &car;
     scount++;
 }
 
@@ -335,13 +335,13 @@ void StringOfCars :: push(Car &car)
 
 void StringOfCars :: pop(Car &car)
 {
-    if(scount < 0)
+    /*if(scount < 0)
     {
         cout << "No Cars" << "\n";
         return;
     }
     car = *ptr[scount - 1];
-    scount--;
+    scount--;*/
 }
 
 /**Friend operator overload function for Car class**/
@@ -437,7 +437,7 @@ void buildCar(Car *&ptr,  string &mark,  int &num,  Kind &type,  bool &load,  st
     ptr = new Car;
     ptr -> setUp(mark, num, type, load, dest);
     string1.push(*ptr);
-    return;
+
 }
 
 void buildFreightCar(FreightCar *&ptr,  string &mark,  int &num,  Kind &type,  bool &load,  string &dest, StringOfCars &string1)
@@ -445,7 +445,7 @@ void buildFreightCar(FreightCar *&ptr,  string &mark,  int &num,  Kind &type,  b
     ptr = new FreightCar;
     ptr -> setUp(mark, num, type, load, dest);
     string1.push(*ptr);
-    return;
+
 
 }
 
@@ -454,7 +454,7 @@ void buildPassengerCar(PassengerCar *&ptr,  string &mark,  int &num,  Kind &type
     ptr = new PassengerCar;
     ptr -> setUp(mark, num, type, load, dest);
     string1.push(*ptr);
-    return;
+
 
 }
 
