@@ -295,7 +295,7 @@ StringOfCars :: StringOfCars(const StringOfCars &cars)
 
 StringOfCars :: ~StringOfCars()
 {
-    delete[] *ptr;
+    delete[] ptr;
 }
 
 /**Outputs StringOfCars**/
@@ -306,11 +306,12 @@ void StringOfCars :: output()
     {
         cout << "No Cars";
     }
-    for(int x = 0; x <= scount; x++)
+    for(int x = 0; x < scount; x++)
     {
         cout << x;
         ptr[x] -> output();
     }
+    return;
 
 }
 
@@ -365,7 +366,6 @@ void input(StringOfCars &string1)
     string carnum;
     string mark;
     int num;
-    int counter = 0;
     string type;
     bool load;
     string dest;
